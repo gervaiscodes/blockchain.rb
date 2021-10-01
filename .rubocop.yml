@@ -3,4 +3,4 @@ AllCops:
   Exclude:
     - bin/**
     - spec/spec_helper.rb
-    - /vendor/bundle/**
+    - vendor/**/*.rb
