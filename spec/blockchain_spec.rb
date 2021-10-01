@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'blockchain'
 
 RSpec.describe Blockchain do

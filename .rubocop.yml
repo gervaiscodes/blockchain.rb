@@ -1,0 +1,5 @@
+AllCops:
+  NewCops: enable
+  Exclude:
+    - bin/**
+    - spec/spec_helper.rb
