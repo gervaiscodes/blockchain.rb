@@ -4,5 +4,5 @@ AllCops:
     - bin/**
     - spec/spec_helper.rb
     - vendor/**/*
-Documentation:
+Style/Documentation:
   Enabled: false
