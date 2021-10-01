@@ -4,3 +4,4 @@ AllCops:
     - bin/**
     - spec/spec_helper.rb
     - vendor/**/*.rb
+    - blockchain.rb/vendor/**/*.rb
