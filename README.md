@@ -2,4 +2,4 @@
 
 A simple p2p proof-of-work blockchain in Ruby
 
-![Rspec](https://github.com/gervaiscodes/blockchain.rb/actions/workflows/rspec.yaml/badge.svg)
+![Rspec](https://github.com/gervaiscodes/blockchain.rb/actions/workflows/rspec.yaml/badge.svg) ![Rubocop](https://github.com/gervaiscodes/blockchain.rb/actions/workflows/rubocop.yaml/badge.svg)
