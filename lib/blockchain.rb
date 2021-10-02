@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'block'
+require './lib/block'
 
 class Blockchain
   DIFFICULTY = 4
