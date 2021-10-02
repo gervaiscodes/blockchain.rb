@@ -15,4 +15,13 @@ class Block
   def hash
     Digest::SHA2.new(256).hexdigest("#{index}#{timestamp}#{previous_hash}#{data}")
   end
+
+  def to_h
+    {
+      index: index,
+      timestamp: timestamp,
+      previous_hash: previous_hash,
+      data: data
+    }
+  end
 end
