@@ -36,6 +36,7 @@ GEM
     rubocop-rspec (2.5.0)
       rubocop (~> 1.19)
     ruby-progressbar (1.11.0)
+    timecop (0.9.4)
     unicode-display_width (2.1.0)
 
 PLATFORMS
@@ -45,6 +46,7 @@ DEPENDENCIES
   rspec
   rubocop
   rubocop-rspec
+  timecop
 
 RUBY VERSION
    ruby 2.7.1p83

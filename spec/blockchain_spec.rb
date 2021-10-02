@@ -1,9 +1,15 @@
 # frozen_string_literal: true
 
 require 'blockchain'
+require 'timecop'
 
 RSpec.describe Blockchain do
-  let(:blockchain) { Blockchain.new }
+  let(:blockchain) do
+    Timecop.freeze(Time.local(2008, 8, 8, 8, 8, 8))
+    blockchain = Blockchain.new
+    Timecop.return
+    blockchain
+  end
 
   describe 'blockchain initialization' do
     it 'creates genesis block' do
@@ -20,7 +26,7 @@ RSpec.describe Blockchain do
           Block.new(
             index: 1,
             timestamp: 1_633_173_441,
-            previous_hash: '075c27741a3506846368fa6e5b3477f85b31ceee71a5716e2f12b40fa21d23aa',
+            previous_hash: '80aa139e7cb9ca8afd468e3df2b6f86821db662324116226e576b754fa25b9d4',
             data: 'Second block'
           )
         )
@@ -28,7 +34,7 @@ RSpec.describe Blockchain do
           Block.new(
             index: 2,
             timestamp: 1_633_173_565,
-            previous_hash: '5b781b11ade2d9f65010e18aaf809d67a37757af5173aa6f8385de19cb5d71e6',
+            previous_hash: 'd55fa29a9d6284013134462f9288469bb41e2153cff6d110718018443f8941fd',
             data: 'Third block'
           )
         )
@@ -45,7 +51,7 @@ RSpec.describe Blockchain do
           Block.new(
             index: 1,
             timestamp: 1_633_173_441,
-            previous_hash: '075c27741a3506846368fa6e5b3477f85b31ceee71a5716e2f12b40fa21d23aa',
+            previous_hash: '80aa139e7cb9ca8afd468e3df2b6f86821db662324116226e576b754fa25b9d4',
             data: 'Second block MODIFIED'
           )
         )
@@ -53,7 +59,7 @@ RSpec.describe Blockchain do
           Block.new(
             index: 2,
             timestamp: 1_633_173_565,
-            previous_hash: '5b781b11ade2d9f65010e18aaf809d67a37757af5173aa6f8385de19cb5d71e6',
+            previous_hash: 'd55fa29a9d6284013134462f9288469bb41e2153cff6d110718018443f8941fd',
             data: 'Third block'
           )
         )
