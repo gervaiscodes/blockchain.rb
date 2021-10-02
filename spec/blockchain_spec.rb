@@ -16,7 +16,7 @@ RSpec.describe Blockchain do
   describe 'blockchain validation' do
     context 'valid blockchain' do
       before do
-        blockchain.add_block(
+        blockchain.append(
           Block.new(
             index: 1,
             timestamp: 1_633_173_441,
@@ -24,7 +24,7 @@ RSpec.describe Blockchain do
             data: 'Second block'
           )
         )
-        blockchain.add_block(
+        blockchain.append(
           Block.new(
             index: 2,
             timestamp: 1_633_173_565,
@@ -41,7 +41,7 @@ RSpec.describe Blockchain do
 
     context 'invalid blockchain (wrong hashes)' do
       before do
-        blockchain.add_block(
+        blockchain.append(
           Block.new(
             index: 1,
             timestamp: 1_633_173_441,
@@ -49,7 +49,7 @@ RSpec.describe Blockchain do
             data: 'Second block MODIFIED'
           )
         )
-        blockchain.add_block(
+        blockchain.append(
           Block.new(
             index: 2,
             timestamp: 1_633_173_565,
@@ -66,7 +66,7 @@ RSpec.describe Blockchain do
 
     context 'invalid blockchain (wrong indexes)' do
       before do
-        blockchain.add_block(
+        blockchain.append(
           Block.new(
             index: 1,
             timestamp: 1_633_173_441,
@@ -74,7 +74,7 @@ RSpec.describe Blockchain do
             data: 'Second block'
           )
         )
-        blockchain.add_block(
+        blockchain.append(
           Block.new(
             index: 3,
             timestamp: 1_633_173_565,

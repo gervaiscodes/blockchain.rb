@@ -21,7 +21,7 @@ class Blockchain
     chain[index]
   end
 
-  def add_block(block)
+  def append(block)
     chain.push(block)
   end
 
