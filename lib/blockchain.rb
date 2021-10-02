@@ -3,26 +3,26 @@
 require_relative 'block'
 
 class Blockchain
-  attr_reader :chain
+  attr_reader :blocks
 
   def initialize
-    @chain = [genesis_block]
+    @blocks = [genesis_block]
   end
 
   def length
-    chain.length
+    blocks.length
   end
 
   def last_block
-    chain.last
+    blocks.last
   end
 
   def block_at(index)
-    chain[index]
+    blocks[index]
   end
 
   def append(block)
-    chain.push(block)
+    blocks.push(block)
   end
 
   def valid?
