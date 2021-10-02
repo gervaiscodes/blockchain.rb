@@ -3,7 +3,7 @@
 require 'sinatra'
 require './lib/blockchain'
 
-class BlockchainApp < Sinatra::Base
+class SinatraApp < Sinatra::Base
   attr_reader :blockchain
 
   def initialize

@@ -11,6 +11,8 @@ GEM
     rack (2.2.3)
     rack-protection (2.1.0)
       rack
+    rack-test (1.1.0)
+      rack (>= 1.0, < 3)
     rainbow (3.0.0)
     regexp_parser (2.1.1)
     rexml (3.2.5)
@@ -55,6 +57,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  rack-test
   rspec
   rubocop
   rubocop-rspec
