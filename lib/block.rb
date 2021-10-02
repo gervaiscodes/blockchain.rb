@@ -13,6 +13,6 @@ class Block
   end
 
   def hash
-    Digest::SHA2.new(256).hexdigest("#{index}#{timestamp}#{previous_hash}#{data}")
+    Digest::SHA2.new(256).hexdigest("#{index}#{previous_hash}#{data}")
   end
 end
