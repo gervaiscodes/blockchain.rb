@@ -13,7 +13,7 @@ post '/mine' do
   request.body.rewind
   body = JSON.parse(request.body.read)
   data = body['data']
-  next_block = blockchain.next_block(data: data)
+  next_block = blockchain.mine_block(data: data)
   blockchain.append(next_block)
   next_block.to_h.to_json
 end

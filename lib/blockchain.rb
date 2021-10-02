@@ -3,6 +3,8 @@
 require_relative 'block'
 
 class Blockchain
+  DIFFICULTY = 4
+
   attr_reader :blocks
 
   def initialize
@@ -35,13 +37,14 @@ class Blockchain
     true
   end
 
-  def next_block(data:)
-    Block.new(
-      index: last_block.index + 1,
-      timestamp: Time.now.to_i,
-      previous_hash: last_block.hash,
-      data: data
-    )
+  def mine_block(data:)
+    nonce = 0
+    loop do
+      block = next_block(nonce: nonce, data: data)
+      return block if block.hash.start_with?('0' * DIFFICULTY)
+
+      nonce += 1
+    end
   end
 
   private
@@ -50,8 +53,19 @@ class Blockchain
     Block.new(
       index: 0,
       timestamp: Time.now.to_i,
+      nonce: 0,
       previous_hash: '',
       data: 'Genesis Block'
+    )
+  end
+
+  def next_block(nonce:, data:)
+    Block.new(
+      index: last_block.index + 1,
+      timestamp: Time.now.to_i,
+      nonce: nonce,
+      previous_hash: last_block.hash,
+      data: data
     )
   end
 end

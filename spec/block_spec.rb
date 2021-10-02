@@ -4,12 +4,18 @@ require 'block'
 
 RSpec.describe Block do
   let(:block) do
-    Block.new(index: 0, timestamp: 1_633_170_363, previous_hash: '', data: 'block')
+    Block.new(
+      index: 0,
+      timestamp: 1_633_170_363,
+      nonce: 1,
+      previous_hash: '',
+      data: 'block'
+    )
   end
 
   describe 'block hash' do
     it 'computes correct block hash' do
-      expect(block.hash).to eq('1cde0fcd32e0da7200cc1b70aee3c5d1f116be618b9d16f92e4d6e55e6511081')
+      expect(block.hash).to eq('4bb3e3221ebbcae41501796460764329bb02f2a2ae26871ed4fa1a43bd341a7d')
     end
   end
 end

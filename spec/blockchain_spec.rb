@@ -26,7 +26,8 @@ RSpec.describe Blockchain do
           Block.new(
             index: 1,
             timestamp: 1_633_173_441,
-            previous_hash: '0f60acf762e19d1ef28979b558dea42e10eb1c1e736f5d6bb478ae9e928812e9',
+            nonce: 1,
+            previous_hash: 'fbaf8efb574966243298f160491b36aea07e16341298beb586026a4fc90a6a70',
             data: 'Second block'
           )
         )
@@ -34,7 +35,8 @@ RSpec.describe Blockchain do
           Block.new(
             index: 2,
             timestamp: 1_633_173_565,
-            previous_hash: '8ead48f1fca4a6e6e5d76fc5308126020ff448fdac4dd2275b27c8a141f8cfea',
+            nonce: 2,
+            previous_hash: '0eb60052dbd2c9b17bde623cc15e19710c189653f7c77b6c9921ab26729be3d8',
             data: 'Third block'
           )
         )
@@ -51,7 +53,8 @@ RSpec.describe Blockchain do
           Block.new(
             index: 1,
             timestamp: 1_633_173_441,
-            previous_hash: '0f60acf762e19d1ef28979b558dea42e10eb1c1e736f5d6bb478ae9e928812e9',
+            nonce: '',
+            previous_hash: 'fbaf8efb574966243298f160491b36aea07e16341298beb586026a4fc90a6a70',
             data: 'Second block MODIFIED'
           )
         )
@@ -59,7 +62,8 @@ RSpec.describe Blockchain do
           Block.new(
             index: 2,
             timestamp: 1_633_173_565,
-            previous_hash: '8ead48f1fca4a6e6e5d76fc5308126020ff448fdac4dd2275b27c8a141f8cfea',
+            nonce: '',
+            previous_hash: '0eb60052dbd2c9b17bde623cc15e19710c189653f7c77b6c9921ab26729be3d8',
             data: 'Third block'
           )
         )
@@ -76,7 +80,8 @@ RSpec.describe Blockchain do
           Block.new(
             index: 1,
             timestamp: 1_633_173_441,
-            previous_hash: '0f60acf762e19d1ef28979b558dea42e10eb1c1e736f5d6bb478ae9e928812e9',
+            nonce: '',
+            previous_hash: 'fbaf8efb574966243298f160491b36aea07e16341298beb586026a4fc90a6a70',
             data: 'Second block'
           )
         )
@@ -84,7 +89,8 @@ RSpec.describe Blockchain do
           Block.new(
             index: 3,
             timestamp: 1_633_173_565,
-            previous_hash: '8ead48f1fca4a6e6e5d76fc5308126020ff448fdac4dd2275b27c8a141f8cfea',
+            nonce: '',
+            previous_hash: '0eb60052dbd2c9b17bde623cc15e19710c189653f7c77b6c9921ab26729be3d8',
             data: 'Third block'
           )
         )
@@ -93,6 +99,38 @@ RSpec.describe Blockchain do
       it 'invalidates blockchain' do
         expect(blockchain.valid?).to be false
       end
+    end
+  end
+
+  describe 'block mining' do
+    let(:data) { 'block' }
+    let(:block) { blockchain.mine_block(data: data) }
+
+    it 'computes hash with correct difficulty' do
+      expect(block.hash).to start_with('0' * Blockchain::DIFFICULTY)
+    end
+
+    it 'sets correct attributes of the new block' do
+      expect(block.index).to eq(blockchain.last_block.index + 1)
+      expect(block.previous_hash).to eq(blockchain.last_block.hash)
+      expect(block.data).to eq(data)
+    end
+  end
+
+  describe 'appending a new block to the chain' do
+    let(:data) { 'block' }
+    let(:block) { blockchain.mine_block(data: data) }
+
+    before do
+      blockchain.append(block)
+    end
+
+    it 'appends a new mined block to the chain' do
+      expect(blockchain.last_block.hash).to eq(block.hash)
+    end
+
+    it 'results in a valid chain' do
+      expect(blockchain.valid?).to be(true)
     end
   end
 end
