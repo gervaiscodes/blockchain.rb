@@ -23,7 +23,6 @@ class Blockchain
     Block.new(
       index: 0,
       timestamp: Time.now.to_i,
-      nonce: 1,
       previous_hash: '',
       data: 'Genesis Block'
     )
