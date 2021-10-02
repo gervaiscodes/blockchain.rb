@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'block'
+require_relative 'block'
 
 class Blockchain
   attr_reader :chain
@@ -33,6 +33,15 @@ class Blockchain
       return false if current_block.previous_hash != previous_block.hash
     end
     true
+  end
+
+  def next_block(data:)
+    Block.new(
+      index: last_block.index + 1,
+      timestamp: Time.now.to_i,
+      previous_hash: last_block.hash,
+      data: data
+    )
   end
 
   private
