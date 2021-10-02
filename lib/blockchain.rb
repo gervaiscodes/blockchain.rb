@@ -29,6 +29,7 @@ class Blockchain
     (1...length).each do |position|
       previous_block = block_at(position - 1)
       current_block = block_at(position)
+      return false if current_block.index != previous_block.index + 1
       return false if current_block.previous_hash != previous_block.hash
     end
     true
