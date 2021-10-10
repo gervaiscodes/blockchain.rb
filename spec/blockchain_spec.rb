@@ -20,26 +20,33 @@ RSpec.describe Blockchain do
   end
 
   describe 'blockchain validation' do
+    let(:block_1_index) { 1 }
+    let(:block_2_index) { 2 }
+    let(:block_1_data) { 'Second block' }
+    let(:block_2_data) { 'Third block' }
+    let(:block_1) do
+      Block.new(
+        index: block_1_index,
+        timestamp: 1_633_173_441,
+        nonce: 1,
+        previous_hash: 'fbaf8efb574966243298f160491b36aea07e16341298beb586026a4fc90a6a70',
+        data: block_1_data
+      )
+    end
+    let(:block_2) do
+      Block.new(
+        index: block_2_index,
+        timestamp: 1_633_173_565,
+        nonce: 2,
+        previous_hash: '0eb60052dbd2c9b17bde623cc15e19710c189653f7c77b6c9921ab26729be3d8',
+        data: 'Third block'
+      )
+    end
+
     context 'valid blockchain' do
       before do
-        blockchain.append(
-          Block.new(
-            index: 1,
-            timestamp: 1_633_173_441,
-            nonce: 1,
-            previous_hash: 'fbaf8efb574966243298f160491b36aea07e16341298beb586026a4fc90a6a70',
-            data: 'Second block'
-          )
-        )
-        blockchain.append(
-          Block.new(
-            index: 2,
-            timestamp: 1_633_173_565,
-            nonce: 2,
-            previous_hash: '0eb60052dbd2c9b17bde623cc15e19710c189653f7c77b6c9921ab26729be3d8',
-            data: 'Third block'
-          )
-        )
+        blockchain.append(block_1)
+        blockchain.append(block_2)
       end
 
       it 'validates blockchain' do
@@ -48,25 +55,11 @@ RSpec.describe Blockchain do
     end
 
     context 'invalid blockchain (wrong hashes)' do
+      let(:block_1_data) { 'Second block MODIFIED' }
+
       before do
-        blockchain.append(
-          Block.new(
-            index: 1,
-            timestamp: 1_633_173_441,
-            nonce: '',
-            previous_hash: 'fbaf8efb574966243298f160491b36aea07e16341298beb586026a4fc90a6a70',
-            data: 'Second block MODIFIED'
-          )
-        )
-        blockchain.append(
-          Block.new(
-            index: 2,
-            timestamp: 1_633_173_565,
-            nonce: '',
-            previous_hash: '0eb60052dbd2c9b17bde623cc15e19710c189653f7c77b6c9921ab26729be3d8',
-            data: 'Third block'
-          )
-        )
+        blockchain.append(block_1)
+        blockchain.append(block_2)
       end
 
       it 'invalidates blockchain' do
@@ -75,25 +68,11 @@ RSpec.describe Blockchain do
     end
 
     context 'invalid blockchain (wrong indexes)' do
+      let(:block_2_index) { 3 }
+
       before do
-        blockchain.append(
-          Block.new(
-            index: 1,
-            timestamp: 1_633_173_441,
-            nonce: '',
-            previous_hash: 'fbaf8efb574966243298f160491b36aea07e16341298beb586026a4fc90a6a70',
-            data: 'Second block'
-          )
-        )
-        blockchain.append(
-          Block.new(
-            index: 3,
-            timestamp: 1_633_173_565,
-            nonce: '',
-            previous_hash: '0eb60052dbd2c9b17bde623cc15e19710c189653f7c77b6c9921ab26729be3d8',
-            data: 'Third block'
-          )
-        )
+        blockchain.append(block_1)
+        blockchain.append(block_2)
       end
 
       it 'invalidates blockchain' do
