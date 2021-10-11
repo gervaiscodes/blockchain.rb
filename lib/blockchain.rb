@@ -52,7 +52,7 @@ class Blockchain
     peers.push(url)
   end
 
-  def trigger_peers_sync
+  def broadcast_sync
     peers.each do |peer|
       Net::HTTP.post(URI("#{peer}/sync"), '')
     end

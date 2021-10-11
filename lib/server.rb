@@ -21,7 +21,7 @@ class SinatraApp < Sinatra::Base
     data = body['data']
     next_block = blockchain.mine_block(data: data)
     blockchain.append(next_block)
-    blockchain.trigger_peers_sync
+    blockchain.broadcast_sync
     next_block.to_h.to_json
   end
 
