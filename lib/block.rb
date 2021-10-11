@@ -11,7 +11,8 @@ class Block
     @nonce = nonce
     @previous_hash = previous_hash
     @data = data
-    @hash = Digest::SHA2.new(256).hexdigest("#{index}#{timestamp}#{nonce}#{previous_hash}#{data}")
+    @hash = Block.compute_hash(index: index, timestamp: timestamp, nonce: nonce, previous_hash: previous_hash,
+                               data: data)
   end
 
   def to_h
@@ -23,5 +24,9 @@ class Block
       hash: hash,
       data: data
     }
+  end
+
+  def self.compute_hash(index:, timestamp:, nonce:, previous_hash:, data:)
+    Digest::SHA2.new(256).hexdigest("#{index}#{timestamp}#{nonce}#{previous_hash}#{data}")
   end
 end

@@ -31,9 +31,19 @@ class Blockchain
     (1...length).each do |position|
       previous_block = block_at(position - 1)
       current_block = block_at(position)
-      return false if current_block.index != previous_block.index + 1
-      return false if current_block.previous_hash != previous_block.hash
+      return false unless valid_new_block?(previous_block, current_block)
     end
+    true
+  end
+
+  def valid_new_block?(previous_block, current_block)
+    current_hash = Block.compute_hash(index: current_block.index, timestamp: current_block.timestamp,
+                                      nonce: current_block.nonce, previous_hash: current_block.previous_hash,
+                                      data: current_block.data)
+    return false if current_block.hash != current_hash
+    return false if current_block.index != previous_block.index + 1
+    return false if current_block.previous_hash != previous_block.hash
+
     true
   end
 
