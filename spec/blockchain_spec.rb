@@ -43,12 +43,12 @@ RSpec.describe Blockchain do
       )
     end
 
-    context 'valid blockchain' do
-      before do
-        blockchain.append(block1)
-        blockchain.append(block2)
-      end
+    before do
+      blockchain.append(block1)
+      blockchain.append(block2)
+    end
 
+    context 'valid blockchain' do
       it 'validates blockchain' do
         expect(blockchain.valid?).to be true
       end
@@ -57,11 +57,6 @@ RSpec.describe Blockchain do
     context 'invalid blockchain (wrong hashes)' do
       let(:block1_data) { 'Second block MODIFIED' }
 
-      before do
-        blockchain.append(block1)
-        blockchain.append(block2)
-      end
-
       it 'invalidates blockchain' do
         expect(blockchain.valid?).to be false
       end
@@ -69,11 +64,6 @@ RSpec.describe Blockchain do
 
     context 'invalid blockchain (wrong indexes)' do
       let(:block2_index) { 3 }
-
-      before do
-        blockchain.append(block1)
-        blockchain.append(block2)
-      end
 
       it 'invalidates blockchain' do
         expect(blockchain.valid?).to be false
