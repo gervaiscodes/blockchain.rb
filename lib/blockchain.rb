@@ -54,7 +54,7 @@ class Blockchain
 
   def trigger_peers_sync
     peers.each do |peer|
-      Net::HTTP.post(URI("#{peer}/sync"), "{}")
+      Net::HTTP.post(URI("#{peer}/sync"), '')
     end
   end
 
@@ -65,9 +65,7 @@ class Blockchain
       parsed = JSON.parse(res)
       blocks = parsed.map { |block| Block.from_hash(block) }
       chain = Blockchain.new(blocks: blocks)
-      if chain.valid? && chain.length > length
-        longest_chain = chain
-      end
+      longest_chain = chain if chain.valid? && chain.length > length
     end
     self.blocks = longest_chain.blocks if longest_chain
   end
