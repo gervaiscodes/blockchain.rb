@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'json'
 require 'digest'
 
 class Block
@@ -24,6 +25,16 @@ class Block
       hash: hash,
       data: data
     }
+  end
+
+  def self.from_hash(hash)
+    Block.new(
+      index: hash['index'],
+      timestamp: hash['timestamp'],
+      nonce: hash['nonce'],
+      previous_hash: hash['previous_hash'],
+      data: hash['data']
+    )
   end
 
   def self.compute_hash(index:, timestamp:, nonce:, previous_hash:, data:)

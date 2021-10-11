@@ -21,6 +21,23 @@ class SinatraApp < Sinatra::Base
     data = body['data']
     next_block = blockchain.mine_block(data: data)
     blockchain.append(next_block)
+    blockchain.trigger_peers_sync
     next_block.to_h.to_json
+  end
+
+  get '/peers' do
+    blockchain.peers.to_json
+  end
+
+  post '/add_peer' do
+    request.body.rewind
+    body = JSON.parse(request.body.read)
+    url = body['url']
+    blockchain.add_peer(url)
+  end
+
+  post '/sync' do
+    blockchain.sync_from_peers
+    blockchain.blocks.map(&:to_h).to_json
   end
 end

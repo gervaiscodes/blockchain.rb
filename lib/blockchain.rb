@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
+require 'net/http'
 require './lib/block'
 
 class Blockchain
   DIFFICULTY = 4
 
-  attr_reader :blocks
+  attr_reader :blocks, :peers
 
   def initialize(blocks: [genesis_block])
     @blocks = blocks
+    @peers = []
   end
 
   def length
@@ -44,6 +46,30 @@ class Blockchain
 
       nonce += 1
     end
+  end
+
+  def add_peer(url)
+    peers.push(url)
+  end
+
+  def trigger_peers_sync
+    peers.each do |peer|
+      Net::HTTP.post(URI("#{peer}/sync"), "{}")
+    end
+  end
+
+  def sync_from_peers
+    longest_chain = nil
+    peers.each do |peer|
+      res = Net::HTTP.get(URI("#{peer}/blocks"))
+      parsed = JSON.parse(res)
+      blocks = parsed.map { |block| Block.from_hash(block) }
+      chain = Blockchain.new(blocks: blocks)
+      if chain.valid? && chain.length > length
+        longest_chain = chain
+      end
+    end
+    blocks = longest_chain.blocks if longest_chain
   end
 
   private
