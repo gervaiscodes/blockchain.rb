@@ -7,8 +7,8 @@ class Blockchain
 
   attr_reader :blocks
 
-  def initialize
-    @blocks = [genesis_block]
+  def initialize(blocks: [genesis_block])
+    @blocks = blocks
   end
 
   def length
