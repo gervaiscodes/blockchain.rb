@@ -4,13 +4,7 @@ require 'block'
 
 RSpec.describe Block do
   let(:block) do
-    Block.new(
-      index: 0,
-      timestamp: 1_633_170_363,
-      nonce: 1,
-      previous_hash: '',
-      data: 'block'
-    )
+    Block.new(0, 1_633_170_363, 1, '', 'block')
   end
 
   describe 'block hash' do

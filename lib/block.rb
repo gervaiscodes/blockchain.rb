@@ -6,14 +6,13 @@ require 'digest'
 class Block
   attr_reader :index, :timestamp, :nonce, :previous_hash, :data, :hash
 
-  def initialize(index:, timestamp:, nonce:, previous_hash:, data:)
+  def initialize(index, timestamp, nonce, previous_hash, data)
     @index = index
     @timestamp = timestamp
     @nonce = nonce
     @previous_hash = previous_hash
     @data = data
-    @hash = Block.compute_hash(index: index, timestamp: timestamp, nonce: nonce, previous_hash: previous_hash,
-                               data: data)
+    @hash = Block.compute_hash(index, timestamp, nonce, previous_hash, data)
   end
 
   def to_h
@@ -28,16 +27,10 @@ class Block
   end
 
   def self.from_hash(hash)
-    Block.new(
-      index: hash['index'],
-      timestamp: hash['timestamp'],
-      nonce: hash['nonce'],
-      previous_hash: hash['previous_hash'],
-      data: hash['data']
-    )
+    Block.new(hash['index'], hash['timestamp'], hash['nonce'], hash['previous_hash'], hash['data'])
   end
 
-  def self.compute_hash(index:, timestamp:, nonce:, previous_hash:, data:)
+  def self.compute_hash(index, timestamp, nonce, previous_hash, data)
     Digest::SHA2.new(256).hexdigest("#{index}#{timestamp}#{nonce}#{previous_hash}#{data}")
   end
 end

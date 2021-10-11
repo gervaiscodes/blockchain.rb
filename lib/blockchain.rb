@@ -69,35 +69,22 @@ class Blockchain
         longest_chain = chain
       end
     end
-    blocks = longest_chain.blocks if longest_chain
+    self.blocks = longest_chain.blocks if longest_chain
   end
 
   private
 
   def genesis_block
-    Block.new(
-      index: 0,
-      timestamp: Time.now.to_i,
-      nonce: 0,
-      previous_hash: '',
-      data: 'Genesis Block'
-    )
+    Block.new(0, Time.now.to_i, 0, '', 'Genesis Block')
   end
 
   def next_block(nonce:, data:)
-    Block.new(
-      index: last_block.index + 1,
-      timestamp: Time.now.to_i,
-      nonce: nonce,
-      previous_hash: last_block.hash,
-      data: data
-    )
+    Block.new(last_block.index + 1, Time.now.to_i, nonce, last_block.hash, data)
   end
 
   def block_valid?(current, previous)
-    current_hash = Block.compute_hash(index: current.index, timestamp: current.timestamp,
-                                      nonce: current.nonce, previous_hash: current.previous_hash,
-                                      data: current.data)
+    current_hash = Block.compute_hash(current.index, current.timestamp, current.nonce,
+                                      current.previous_hash, current.data)
     return false if current.hash != current_hash
     return false if current.index != previous.index + 1
     return false if current.previous_hash != previous.hash

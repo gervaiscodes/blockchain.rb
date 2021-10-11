@@ -22,25 +22,15 @@ RSpec.describe Blockchain do
   describe 'blockchain validation' do
     let(:block1_index) { 1 }
     let(:block2_index) { 2 }
+    let(:block1_hash) { 'fbaf8efb574966243298f160491b36aea07e16341298beb586026a4fc90a6a70' }
+    let(:block2_hash) { '0eb60052dbd2c9b17bde623cc15e19710c189653f7c77b6c9921ab26729be3d8' }
     let(:block1_data) { 'Second block' }
     let(:block2_data) { 'Third block' }
     let(:block1) do
-      Block.new(
-        index: block1_index,
-        timestamp: 1_633_173_441,
-        nonce: 1,
-        previous_hash: 'fbaf8efb574966243298f160491b36aea07e16341298beb586026a4fc90a6a70',
-        data: block1_data
-      )
+      Block.new(block1_index, 1_633_173_441, 1, block1_hash, block1_data)
     end
     let(:block2) do
-      Block.new(
-        index: block2_index,
-        timestamp: 1_633_173_565,
-        nonce: 2,
-        previous_hash: '0eb60052dbd2c9b17bde623cc15e19710c189653f7c77b6c9921ab26729be3d8',
-        data: 'Third block'
-      )
+      Block.new(block2_index, 1_633_173_565, 2, block2_hash, block2_data)
     end
 
     before do
