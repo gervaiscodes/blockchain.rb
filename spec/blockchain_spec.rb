@@ -44,8 +44,16 @@ RSpec.describe Blockchain do
       end
     end
 
-    context 'invalid blockchain (wrong hashes)' do
+    context 'invalid blockchain (wrong data)' do
       let(:block1_data) { 'Second block MODIFIED' }
+
+      it 'invalidates blockchain' do
+        expect(blockchain.valid?).to be false
+      end
+    end
+
+    context 'invalid blockchain (wrong hash)' do
+      let(:block2_previous_hash) { '0000' }
 
       it 'invalidates blockchain' do
         expect(blockchain.valid?).to be false
