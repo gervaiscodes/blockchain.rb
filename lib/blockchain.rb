@@ -41,7 +41,7 @@ class Blockchain
   def mine_block(data:)
     nonce = 0
     loop do
-      block = next_block(nonce: nonce, data: data)
+      block = Block.new(last_block.index + 1, Time.now.to_i, nonce, last_block.hash, data)
       return block if block.hash.start_with?('0' * DIFFICULTY)
 
       nonce += 1
@@ -75,10 +75,6 @@ class Blockchain
 
   def genesis_block
     Block.new(0, Time.now.to_i, 0, '', 'Genesis Block')
-  end
-
-  def next_block(nonce:, data:)
-    Block.new(last_block.index + 1, Time.now.to_i, nonce, last_block.hash, data)
   end
 
   def block_valid?(current, previous)
