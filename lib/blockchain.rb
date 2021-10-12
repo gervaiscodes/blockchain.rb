@@ -53,8 +53,10 @@ class Blockchain
   end
 
   def broadcast_sync
-    peers.each do |peer|
-      Net::HTTP.post(URI("#{peer}/sync"), '')
+    Thread.new do
+      peers.each do |peer|
+        Net::HTTP.post(URI("#{peer}/sync"), '')
+      end
     end
   end
 
