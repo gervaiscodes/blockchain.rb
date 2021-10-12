@@ -6,7 +6,7 @@ require './lib/block'
 class Blockchain
   DIFFICULTY = 4
 
-  attr_accessor :blocks, :peers
+  attr_reader :blocks, :peers
 
   def initialize(blocks: [genesis_block])
     @blocks = blocks
@@ -68,7 +68,7 @@ class Blockchain
       chain = Blockchain.new(blocks: parsed.map { |block| Block.from_hash(block) })
       longest_chain = chain if chain.valid? && chain.length > length
     end
-    blocks = longest_chain.blocks if longest_chain
+    @blocks = longest_chain.blocks if longest_chain
   end
 
   private
