@@ -4,9 +4,10 @@ require 'blockchain'
 require 'timecop'
 
 RSpec.describe Blockchain do
+  let(:difficulty) { 2 }
   let(:blockchain) do
     Timecop.freeze(Time.utc(2008, 8, 8, 8, 8, 8))
-    blockchain = Blockchain.new
+    blockchain = Blockchain.new(difficulty: difficulty)
     Timecop.return
     blockchain
   end
@@ -70,11 +71,12 @@ RSpec.describe Blockchain do
   end
 
   describe 'block mining' do
+    let(:difficulty) { 3 }
     let(:data) { 'block' }
     let(:block) { blockchain.mine_block(data: data) }
 
     it 'computes hash with correct difficulty' do
-      expect(block.hash).to start_with('0' * Blockchain::DIFFICULTY)
+      expect(block.hash).to start_with('0' * difficulty)
     end
 
     it 'sets correct attributes of the new block' do

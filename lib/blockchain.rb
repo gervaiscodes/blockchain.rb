@@ -4,12 +4,11 @@ require 'net/http'
 require './lib/block'
 
 class Blockchain
-  DIFFICULTY = 4
+  attr_reader :blocks, :difficulty, :peers
 
-  attr_reader :blocks, :peers
-
-  def initialize(blocks: [genesis_block])
+  def initialize(blocks: [genesis_block], difficulty: 4)
     @blocks = blocks
+    @difficulty = difficulty
     @peers = []
   end
 
@@ -42,7 +41,7 @@ class Blockchain
     nonce = 0
     loop do
       block = Block.new(last_block.index + 1, Time.now.to_i, nonce, last_block.hash, data)
-      return block if block.hash.start_with?('0' * DIFFICULTY)
+      return block if block.hash.start_with?('0' * difficulty)
 
       nonce += 1
     end
