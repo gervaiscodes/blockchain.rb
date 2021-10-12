@@ -70,6 +70,10 @@ class Blockchain
     @blocks = longest_chain.blocks if longest_chain
   end
 
+  def to_h
+    blocks.map(&:to_h)
+  end
+
   private
 
   def genesis_block

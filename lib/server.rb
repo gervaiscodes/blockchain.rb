@@ -12,7 +12,7 @@ class SinatraApp < Sinatra::Base
   end
 
   get '/blocks' do
-    blockchain.blocks.map(&:to_h).to_json
+    blockchain.to_h.to_json
   end
 
   post '/mine' do
@@ -38,6 +38,5 @@ class SinatraApp < Sinatra::Base
 
   post '/sync' do
     blockchain.sync_from_peers
-    blockchain.blocks.map(&:to_h).to_json
   end
 end
