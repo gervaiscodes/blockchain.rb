@@ -11,6 +11,10 @@ class SinatraApp < Sinatra::Base
     @blockchain = Blockchain.new
   end
 
+  before do
+    content_type :json
+  end
+
   get '/blocks' do
     blockchain.to_h.to_json
   end
@@ -34,9 +38,10 @@ class SinatraApp < Sinatra::Base
     body = JSON.parse(request.body.read)
     url = body['url']
     blockchain.add_peer(url)
+    { url: url }.to_json
   end
 
   post '/sync' do
-    blockchain.sync_from_peers
+    blockchain.replace_chain_with_longest_from_peers
   end
 end

@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-require 'net/http'
 require './lib/block'
+require './lib/p2p'
 
 class Blockchain
-  attr_reader :blocks, :difficulty, :peers
+  attr_reader :blocks, :difficulty, :p2p
 
   def initialize(blocks: [genesis_block], difficulty: 4)
     @blocks = blocks
     @difficulty = difficulty
-    @peers = []
+    @p2p = P2P.new
   end
 
   def length
@@ -48,26 +48,15 @@ class Blockchain
   end
 
   def add_peer(url)
-    peers.push(url)
+    p2p.add_peer(url)
   end
 
   def broadcast_sync
-    Thread.new do
-      peers.each do |peer|
-        Net::HTTP.post(URI("#{peer}/sync"), '')
-      end
-    end
+    p2p.broadcast_sync
   end
 
-  def sync_from_peers
-    longest_chain = nil
-    peers.each do |peer|
-      res = Net::HTTP.get(URI("#{peer}/blocks"))
-      parsed = JSON.parse(res)
-      chain = Blockchain.new(blocks: parsed.map { |block| Block.from_hash(block) })
-      longest_chain = chain if chain.valid? && chain.length > length
-    end
-    @blocks = longest_chain.blocks if longest_chain
+  def replace_chain_with_longest_from_peers
+    @blocks = p2p.longest_chain_from_peers(length) || blocks
   end
 
   def to_h

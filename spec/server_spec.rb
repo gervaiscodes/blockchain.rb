@@ -26,8 +26,18 @@ describe 'Sinatra App' do
       post '/mine', '{ "data": "block" }', { 'CONTENT_TYPE' => 'application/json' }
 
       body = JSON.parse(last_response.body)
-
       expect(body['data']).to eq('block')
+    end
+  end
+
+  describe '/add_peer' do
+    let(:url) { 'http://host:port' }
+
+    it 'adds the new peer' do
+      post '/add_peer', { url: url }.to_json, { 'CONTENT_TYPE' => 'application/json' }
+
+      body = JSON.parse(last_response.body)
+      expect(body['url']).to eq(url)
     end
   end
 end
