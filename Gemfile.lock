@@ -1,13 +1,19 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    addressable (2.8.0)
+      public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.2)
+    crack (0.4.5)
+      rexml
     diff-lcs (1.4.4)
+    hashdiff (1.0.1)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
     parallel (1.21.0)
     parser (3.0.2.0)
       ast (~> 2.4.1)
+    public_suffix (4.0.6)
     rack (2.2.3)
     rack-protection (2.1.0)
       rack
@@ -52,6 +58,10 @@ GEM
     tilt (2.0.10)
     timecop (0.9.4)
     unicode-display_width (2.1.0)
+    webmock (3.14.0)
+      addressable (>= 2.8.0)
+      crack (>= 0.3.2)
+      hashdiff (>= 0.4.0, < 2.0.0)
 
 PLATFORMS
   ruby
@@ -63,6 +73,7 @@ DEPENDENCIES
   rubocop-rspec
   sinatra (~> 2.1)
   timecop
+  webmock (~> 3.14)
 
 RUBY VERSION
    ruby 2.7.1p83
