@@ -47,8 +47,8 @@ class Blockchain
     end
   end
 
-  def add_peer(url)
-    p2p.add_peer(url)
+  def add_peers(urls)
+    p2p.add_peers(urls)
   end
 
   def broadcast_sync

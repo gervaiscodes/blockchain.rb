@@ -118,9 +118,9 @@ RSpec.describe Blockchain do
     end
 
     before do
+      blockchain.p2p.add_peers(peers.map { |peer| peer[:url] })
       peers.each do |peer|
         stub_request(:get, "#{peer[:url]}/blocks").to_return(body: peer[:blocks])
-        blockchain.p2p.add_peer(peer[:url])
       end
     end
 

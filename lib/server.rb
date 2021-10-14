@@ -33,12 +33,12 @@ class SinatraApp < Sinatra::Base
     blockchain.peers.to_json
   end
 
-  post '/add_peer' do
+  post '/add_peers' do
     request.body.rewind
     body = JSON.parse(request.body.read)
-    url = body['url']
-    blockchain.add_peer(url)
-    { url: url }.to_json
+    urls = body['urls']
+    blockchain.add_peers(urls)
+    { urls: urls }.to_json
   end
 
   post '/sync' do

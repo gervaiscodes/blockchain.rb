@@ -30,14 +30,14 @@ describe 'Sinatra App' do
     end
   end
 
-  describe '/add_peer' do
-    let(:url) { 'http://host:port' }
+  describe '/add_peers' do
+    let(:urls) { ['http://host:port'] }
 
     it 'adds the new peer' do
-      post '/add_peer', { url: url }.to_json, { 'CONTENT_TYPE' => 'application/json' }
+      post '/add_peers', { urls: urls }.to_json, { 'CONTENT_TYPE' => 'application/json' }
 
       body = JSON.parse(last_response.body)
-      expect(body['url']).to eq(url)
+      expect(body['urls']).to eq(urls)
     end
   end
 end

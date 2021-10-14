@@ -9,8 +9,8 @@ class P2P
     @peers = []
   end
 
-  def add_peer(url)
-    peers.push(url)
+  def add_peers(urls)
+    peers.concat(urls)
   end
 
   def broadcast_sync

@@ -8,23 +8,23 @@ RSpec.describe P2P do
   let(:p2p) do
     P2P.new
   end
-  let(:url) { 'http://host:8888' }
+  let(:peers) { ['http://host:8888'] }
 
-  describe 'add_peer' do
+  describe 'add_peers' do
     before do
-      p2p.add_peer(url)
+      p2p.add_peers(peers)
     end
 
     it 'adds url to peers' do
-      expect(p2p.peers).to include(url)
+      expect(p2p.peers).to match_array(peers)
     end
   end
 
   describe 'broadcast_sync' do
     before do
+      p2p.add_peers(peers)
       peers.each do |url|
         stub_request(:post, "#{url}/sync")
-        p2p.add_peer(url)
       end
     end
 
@@ -68,9 +68,9 @@ RSpec.describe P2P do
     end
 
     before do
+      p2p.add_peers(peers.map { |peer| peer[:url] })
       peers.each do |peer|
         stub_request(:get, "#{peer[:url]}/blocks").to_return(body: peer[:blocks])
-        p2p.add_peer(peer[:url])
       end
     end
 
