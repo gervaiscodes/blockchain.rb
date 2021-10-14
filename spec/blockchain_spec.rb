@@ -102,4 +102,44 @@ RSpec.describe Blockchain do
       expect(blockchain.valid?).to be(true)
     end
   end
+
+  describe 'replace_chain' do
+    let(:peers) do
+      [{
+        url: 'http://host:7777',
+        blocks: BlockchainFactory.new(3).call.blocks.map(&:to_h).to_json
+      }, {
+        url: 'http://host:8888',
+        blocks: BlockchainFactory.new(8).call.blocks.map(&:to_h).to_json
+      }, {
+        url: 'http://host:9999',
+        blocks: BlockchainFactory.new(4).call.blocks.map(&:to_h).to_json
+      }]
+    end
+
+    before do
+      peers.each do |peer|
+        stub_request(:get, "#{peer[:url]}/blocks").to_return(body: peer[:blocks])
+        blockchain.p2p.add_peer(peer[:url])
+      end
+    end
+
+    context 'when a peer has a longer chain' do
+      let(:blockchain) { BlockchainFactory.new(20).call }
+
+      it 'keeps the current chain unchanged' do
+        expect(blockchain.length).to eq(20)
+        blockchain.replace_chain
+        expect(blockchain.length).to eq(20)
+      end
+    end
+
+    context 'when no peer has a longer chain' do
+      it 'replaces the current chain with the longest one from peers' do
+        expect(blockchain.length).to eq(1)
+        blockchain.replace_chain
+        expect(blockchain.length).to eq(8)
+      end
+    end
+  end
 end
