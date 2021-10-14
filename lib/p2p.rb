@@ -22,11 +22,11 @@ class P2P
   end
 
   def longest_chain_from_peers
-    peers.each_with_object([]) do |url, longest|
+    peers.inject([]) do |longest, url|
       res = Net::HTTP.get(URI("#{url}/blocks"))
       parsed = JSON.parse(res)
       chain = Blockchain.new(blocks: parsed.map { |block| Block.from_hash(block) })
-      return chain.blocks if chain.length > longest.length && chain.valid?
+      chain.length > longest.length && chain.valid? ? chain.blocks : longest
     end
   end
 end
