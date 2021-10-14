@@ -12,7 +12,7 @@ RSpec.describe Blockchain do
     blockchain
   end
 
-  describe 'blockchain initialization' do
+  describe 'initialize' do
     it 'creates genesis block' do
       expect(blockchain.length).to eq(1)
       expect(blockchain.last_block.index).to eq(0)
@@ -20,7 +20,7 @@ RSpec.describe Blockchain do
     end
   end
 
-  describe 'blockchain validation' do
+  describe 'valid?' do
     let(:block1_index) { 1 }
     let(:block2_index) { 2 }
     let(:block1_previous_hash) { 'fbaf8efb574966243298f160491b36aea07e16341298beb586026a4fc90a6a70' }
@@ -70,7 +70,7 @@ RSpec.describe Blockchain do
     end
   end
 
-  describe 'block mining' do
+  describe 'mine_block' do
     let(:difficulty) { 3 }
     let(:data) { 'block' }
     let(:block) { blockchain.mine_block(data: data) }
@@ -86,7 +86,7 @@ RSpec.describe Blockchain do
     end
   end
 
-  describe 'appending a new block to the chain' do
+  describe 'append' do
     let(:data) { 'block' }
     let(:block) { blockchain.mine_block(data: data) }
 
