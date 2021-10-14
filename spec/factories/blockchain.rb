@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BlockchainFactory
   attr_reader :length, :blockchain
 
