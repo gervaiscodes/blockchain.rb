@@ -42,6 +42,6 @@ class SinatraApp < Sinatra::Base
   end
 
   post '/sync' do
-    blockchain.replace_chain_with_longest_from_peers
+    blockchain.replace_chain
   end
 end

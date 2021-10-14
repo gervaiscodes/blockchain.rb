@@ -55,8 +55,9 @@ class Blockchain
     p2p.broadcast_sync
   end
 
-  def replace_chain_with_longest_from_peers
-    @blocks = p2p.longest_chain_from_peers(length) || blocks
+  def replace_chain
+    longest_chain_from_peers = p2p.longest_chain_from_peers
+    @blocks = longest_chain_from_peers if longest_chain_from_peers.length > length
   end
 
   def to_h
