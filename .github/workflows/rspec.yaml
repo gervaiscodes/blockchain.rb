@@ -10,3 +10,7 @@ jobs:
         ruby-version: 2.7.1
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - run: bundle exec rspec
+    - uses: actions/upload-artifact@v2
+      with:
+        name: coverage
+        path: coverage/coverage.svg
