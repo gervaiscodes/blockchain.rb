@@ -30,7 +30,7 @@ class SinatraApp < Sinatra::Base
   end
 
   get '/peers' do
-    blockchain.peers.to_json
+    blockchain.p2p.peers.to_json
   end
 
   post '/add_peers' do
