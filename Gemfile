@@ -11,5 +11,7 @@ group :test do
   gem 'rubocop', require: false
   gem 'rubocop-rspec', require: false
   gem 'timecop', require: false
-  gem 'webmock', '~> 3.14'
+  gem 'webmock', require: false
+  gem 'simplecov', require: false
+  gem 'simplecov-formatter-badge', require: false
 end

@@ -15,6 +15,15 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
 require 'webmock/rspec'
+require 'simplecov'
+require 'simplecov-formatter-badge'
+
+SimpleCov.start do
+  SimpleCov.formatter =
+    SimpleCov::Formatter::MultiFormatter.new \
+      [SimpleCov::Formatter::HTMLFormatter,
+       SimpleCov::Formatter::BadgeFormatter]
+end
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
