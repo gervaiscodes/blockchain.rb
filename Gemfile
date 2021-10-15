@@ -10,8 +10,8 @@ group :test do
   gem 'rspec', require: false
   gem 'rubocop', require: false
   gem 'rubocop-rspec', require: false
-  gem 'timecop', require: false
-  gem 'webmock', require: false
   gem 'simplecov', require: false
   gem 'simplecov-formatter-badge', require: false
+  gem 'timecop', require: false
+  gem 'webmock', require: false
 end
