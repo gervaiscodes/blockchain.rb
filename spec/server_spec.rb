@@ -14,7 +14,7 @@ describe 'Sinatra App' do
 
   before do
     urls.each do |url|
-      stub_request(:get, "#{url}/blocks").to_return(body: "[]")
+      stub_request(:get, "#{url}/blocks").to_return(body: '[]')
     end
   end
 
